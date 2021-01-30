@@ -1,0 +1,98 @@
+{% extends 'epiuse/base.html' %}
+
+{% block title %}
+Employees
+{% endblock %}
+{% block body %}
+{% include 'includes/navbar.html' %}
+<style>
+    tr{
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+    tr:hover{
+            opacity: .5;
+        
+    }
+</style>
+<div class="container">
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-xl-6 col-md-6">
+            <h1>Group Information</h1>
+                <ul>
+                {% for cell in group %}
+                <li>
+                <!-- Instruct Jinja To Add Argument Flight.id To URL-->
+                <p>There are {{cell.dcount}} {{cell.emp_role}}'s</p>
+                </li>
+                {% endfor %}
+                </ul>
+                <div id="search">
+                    <h1>Search Results</h1>
+                    <ul id="search-list">
+                
+                    </ul>
+                </div>
+        </div>
+        
+    <!-- ========================== Right Hand Side ==========================-->
+ 
+        <div class="col-xl-6 col-md-6">
+            <h1>Employee</h1>
+             <!-- <div class="card">
+                 <div class="card-body text-center">
+                     <h5 class="card-title m-b-0">Epiuse Employees</h5> -->
+                     <div class="table-responsive">
+                         <table class="table">
+                             <thead class="thead-light">
+                                <tr>
+
+                                    <th style="width:10%"scope="col">Number</th>
+                                    <th style="width:10%"scope="col">Role</th>
+                                    <th style="width:10%"scope="col">Name</th>
+                                    <th style="width:10%"scope="col">Surname</th>
+                                    <th style="width:10%"scope="col">Dob</th>
+                                    <th style="width:50%"scope="col">Salary p/a</th>
+                                </tr>
+                             </thead>
+                             <tbody class="customtable">
+                                <!-- <tr>
+                                    <td>India</td>
+                                    <td>Chrome OS</td>
+                                    <td>MAC OS</td>
+                                    <td>76</td>
+                                    <td>MAC OS</td>
+                                    <td>76</td>
+                                  </tr> -->
+                                  {% for employee in employees %}
+                                  <tr class="row_tr">
+                                    <td><a href="{% url 'employee' employee.emp_num %}">{{ employee.emp_num }}</a></td>
+                                    <td>{{employee.emp_role}}</td>
+                                    <td>{{employee.emp_name}}</td>
+                                    <td>{{employee.emp_surname}}</td>
+                                    <td>{{employee.emp_dob}}</td>
+                                    <td>R{{employee.emp_salary}}</td>
+                                    <!-- Instruct Jinja To Add Argument Flight.id To URL-->
+                                    <!-- <a href="{% url 'employee' employee.emp_num %}">{{ employee }}</a> -->
+            
+                                </tr>
+                                {% endfor %}
+                                  </tbody>
+                            </table>
+                     </div>
+                 </div>
+             <!-- </div> -->
+        <!-- </div> -->
+     <!-- ========================== Right Hand Side ==========================-->
+    
+    
+    </div>
+</div>
+<br>
+
+{% load static %}
+
+<script src="{% static 'home.js' %}"></script>
+
+{% endblock %}

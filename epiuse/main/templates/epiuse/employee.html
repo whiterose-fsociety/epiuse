@@ -1,0 +1,92 @@
+
+{% extends 'epiuse/base.html' %}
+
+{% block title %}
+Employee {{ employee.emp_num }}
+{% endblock %}
+
+{% block body %}
+{% include 'includes/main_navbar.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'employee.css' %}">
+<h1>Employee {{employee.emp_num}}</h1>
+<div class="container">
+    <div class="row container d-flex justify-content-center">
+        <div class="col-xl-6 col-md-12">
+            <div class="card user-card-full">
+                <div class="row m-l-0 m-r-0">
+
+
+
+
+
+
+
+                    <div class="col-sm-4 bg-c-lite-green user-profile">
+                        <div class="card-block text-center text-white">
+                            <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                            <h6 class="f-w-600">{{employee.emp_name}} {{employee.emp_surname}}</h6>
+                            <p>{{employee.emp_role}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="card-block">
+                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="m-b-10 f-w-600">Date of Birth</p>
+                                    <h6 class="text-muted f-w-400">{{employee.emp_dob}}</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="m-b-10 f-w-600">Salary</p>
+                                    <h6 class="text-muted f-w-400">R{{employee.emp_salary}}</h6>
+                                </div>
+                            </div>
+                            <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="m-b-10 f-w-600">Supervisor | Reporting Line</p>
+                                    {% if supervisor.emp_num != employee.emp_num %}
+                                    <a href="{% url 'employee' supervisor.emp_num %}">{{supervisor.emp_name}}</a>
+                                    {% endif %}
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ul>
+<h2>Underlings</h2>
+<ul>
+{% for underling in underlings %}
+<li>Employee Number: {{ underling.emp_num}} - <a href="{% url 'employee' underling.emp_num %}">{{underling.emp_name}}</a> is supervised by{{employee.emp_name}}</li>
+{% empty %}
+<!-- Jinja Attribute: What to do if the for loop does not run-->
+<li>The employee does not have underlings.</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+<script>
+    $(function () {
+
+        // INITIALIZE DATEPICKER PLUGIN
+        $('.datepicker').datepicker({
+            clearBtn: true,
+            format: "dd/mm/yyyy"
+        });
+    
+    
+        // FOR DEMO PURPOSE
+        $('#reservationDate').on('change', function () {
+            var pickedDate = $('input').val();
+            $('#pickedDate').html(pickedDate);
+        });
+    });
+    
+</script>
